@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 14",
+
+  "compilerOptions": {
+    "outDir": "./build",
+    "module": "CommonJS",
+    "target": "ES2019", // has 100% Node.js v14.15.0 support
+    "lib": ["ES2019"],
+    "moduleResolution": "node",
+
+    "strict": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true
+  },
+}
