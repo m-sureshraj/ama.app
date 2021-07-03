@@ -12,7 +12,6 @@
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
