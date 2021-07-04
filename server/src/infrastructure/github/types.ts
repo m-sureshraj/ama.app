@@ -7,5 +7,5 @@ export interface AccessToken {
 export interface UserProfile {
   name: string;
   email: string;
-  avatar_url: string;
+  avatarUrl: string;
 }

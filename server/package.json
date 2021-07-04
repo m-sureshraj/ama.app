@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "build",
   "scripts": {
-    "start": "tsnd --respawn --transpile-only -r dotenv/config ./src",
+    "start": "tsnd --transpile-only -r dotenv/config ./src",
     "type": "tsc --noEmit",
     "build": "tsc",
     "lint-all": "eslint '**/*.{ts,js}'"
@@ -19,11 +19,13 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "mongodb": "^3.6.9",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@sureshraj/prettier-config": "^1.0.0",
     "@types/express": "^4.17.12",
+    "@types/mongodb": "^3.6.19",
     "@types/node": "14.14.9",
     "@types/node-fetch": "^2.5.10",
     "@typescript-eslint/eslint-plugin": "^4.28.1",

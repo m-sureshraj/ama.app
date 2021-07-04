@@ -1,4 +1,8 @@
-import { getAccessToken, getAuthorizationUrl as getAuthUrl } from '../infrastructure';
+import {
+  getAccessToken,
+  getAuthorizationUrl as getAuthUrl,
+  getUserProfile,
+} from '../infrastructure';
 
 // let's start with the empty scope
 const scopes: string[] = [];
@@ -8,11 +12,13 @@ export function getAuthorizationUrl(): string {
 }
 
 export async function signInOrSignUp(code: string): Promise<string> {
-  const token = await getAccessToken(code);
+  const { token } = await getAccessToken(code);
+  const profile = await getUserProfile(token);
+
+  console.log(profile);
 
   // todo:
-  // fetch the user profile data with access token
-  // signup or sign-in the user
-  // return the user id
-  return '100';
+  // create/update user in db
+  // return the created user id
+  return 'xxx';
 }
