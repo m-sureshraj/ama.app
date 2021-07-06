@@ -5,7 +5,6 @@ import { asyncHandler } from '../infrastructure';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const APP_DOMAIN = process.env.APP_DOMAIN;
-const router = Router();
 
 const cookieOptions = {
   httpOnly: true,
@@ -13,6 +12,8 @@ const cookieOptions = {
   domain: isDevelopment ? 'localhost' : APP_DOMAIN,
   secure: !isDevelopment,
 };
+
+const router = Router();
 
 router.get('/signup', (req: Request, res: Response) => {
   const redirectUrl = getAuthorizationUrl();
@@ -40,3 +41,5 @@ router.get(
     res.redirect(APP_DOMAIN as string);
   })
 );
+
+export default router;

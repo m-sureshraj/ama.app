@@ -40,6 +40,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': WARN,
     '@typescript-eslint/no-unused-vars': [ERROR, { args: 'after-used' }],
     '@typescript-eslint/no-empty-function': ERROR,
+    '@typescript-eslint/explicit-module-boundary-types': ERROR,
   },
   // enable when integrating Jest
   // overrides: [

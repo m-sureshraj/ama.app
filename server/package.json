@@ -12,7 +12,6 @@
     "node": "14.15.0",
     "yarn": "1.22.5"
   },
-  "prettier": "@sureshraj/prettier-config",
   "license": "MIT",
   "dependencies": {
     "cookie-parser": "^1.4.5",
@@ -20,7 +19,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.9",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "papr": "^1.0.1"
   },
   "devDependencies": {
     "@sureshraj/prettier-config": "^1.0.0",

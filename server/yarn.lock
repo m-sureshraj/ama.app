@@ -1651,6 +1651,11 @@ p-try@^1.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
   integrity sha1-y8ec26+P1CKOE/Yh8rGiN8GyB7M=
 
+papr@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/papr/-/papr-1.0.1.tgz#429674c47b7e3b1443c86d673664aeb467e405f9"
+  integrity sha512-/QWbEzwTqWT5EayPpo1FI2mAstKYcJOVoby4u+CXfjabgVu3If9twWCvK0+rEdm/wcdJXuGU5fL81s9Bx+06bA==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
