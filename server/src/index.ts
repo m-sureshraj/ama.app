@@ -1,12 +1,9 @@
-import { connectToMongo } from './infrastructure';
+import { connectToMongo, createServer } from './infrastructure';
+import { router } from './bootstrap';
 
 (async () => {
-  try {
-    console.info('Initializing the application');
-    await connectToMongo();
-    // todo: init the express server
-  } catch (error) {
-    // todo: terminate the application
-    console.error(error);
-  }
+  console.info('Initializing the application');
+  await connectToMongo();
+
+  createServer(router);
 })();

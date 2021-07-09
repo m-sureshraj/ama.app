@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, CookieOptions } from 'express';
 
 import { getAuthorizationUrl, signInOrSignUp } from './service';
 import { asyncHandler } from '../infrastructure';
@@ -6,11 +6,12 @@ import { asyncHandler } from '../infrastructure';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const APP_DOMAIN = process.env.APP_DOMAIN;
 
-const cookieOptions = {
+const cookieOptions: CookieOptions = {
   httpOnly: true,
   maxAge: 1000 * 60 * 2, // expires in 2 minutes
   domain: isDevelopment ? 'localhost' : APP_DOMAIN,
   secure: !isDevelopment,
+  sameSite: 'lax',
 };
 
 const router = Router();
