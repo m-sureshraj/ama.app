@@ -16,12 +16,17 @@ export async function connectToMongo(): Promise<void> {
     return;
   }
 
-  await dbClient.connect();
-  console.info('Successfully connected to the db');
+  try {
+    await dbClient.connect();
+    console.info('Successfully connected to the db');
 
-  console.info('Adding schema validation to the mongo db');
-  papr.initialize(dbClient.db());
-  await papr.updateSchemas();
+    console.info('Adding schema validation to the mongo db');
+    papr.initialize(dbClient.db());
+    await papr.updateSchemas();
+  } catch (error) {
+    console.error(error);
+    // todo: terminate the application
+  }
 }
 
 export async function disconnectFromMongo(force = false): Promise<void> {
