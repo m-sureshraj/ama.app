@@ -1,8 +1,8 @@
-import { connectToMongo, createServer } from './infrastructure';
+import { connectToMongo, createServer, logger } from './infrastructure';
 import { router } from './bootstrap';
 
 (async () => {
-  console.info('Initializing the application');
+  logger.info('Initializing the application');
   await connectToMongo();
 
   createServer(router);

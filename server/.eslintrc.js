@@ -36,10 +36,11 @@ module.exports = {
 
     camelcase: ERROR,
     'no-prototype-builtins': WARN,
+    'no-console': ERROR,
 
     '@typescript-eslint/no-var-requires': ERROR,
     '@typescript-eslint/ban-ts-comment': WARN,
-    '@typescript-eslint/no-unused-vars': [ERROR, { args: 'after-used' }],
+    '@typescript-eslint/no-unused-vars': [ERROR, { args: 'after-used', argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-empty-function': ERROR,
     '@typescript-eslint/explicit-module-boundary-types': ERROR,
   },

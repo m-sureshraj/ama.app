@@ -11,3 +11,5 @@ export enum ResponseCodes {
   unknown = 501,
   serviceUnavailable = 503,
 }
+
+export const serviceName = 'ama-api';
