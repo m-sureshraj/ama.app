@@ -1,7 +1,7 @@
 import { Router, Request, Response, CookieOptions } from 'express';
 
 import { getAuthorizationUrl, signInOrSignUp } from './service';
-import { asyncHandler } from '../infrastructure';
+import { asyncHandler, logger } from '../infrastructure';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const APP_DOMAIN = process.env.APP_DOMAIN;
@@ -27,10 +27,8 @@ router.get(
   asyncHandler(async (req: Request, res: Response) => {
     const { code, error, error_description: errorDescription } = req.query;
 
-    // user didn't authorize the application.
     if (error) {
-      // fixme: use proper logging
-      console.info('user denied the application access', { error, errorDescription });
+      logger.info({ error, errorDescription }, 'User denied the application access');
       res.redirect(APP_DOMAIN as string);
       return;
     }

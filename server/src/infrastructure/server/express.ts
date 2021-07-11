@@ -2,7 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import { notFoundErrorHandler } from './middlewares/errorHandler';
+import { logger } from '../logger';
+import { notFoundErrorHandler, errorHandler } from './middlewares/errorHandler';
 
 const corsOption = {
   origin: process.env.APP_DOMAIN,
@@ -15,8 +16,9 @@ export function createExpressApp(router: express.Router): express.Application {
 
   // app.use(helmet());
 
+  // todo: use a proper request logger
   app.use((req, res, next) => {
-    console.log(req.originalUrl);
+    logger.info(req.originalUrl);
     next();
   });
 
@@ -31,7 +33,7 @@ export function createExpressApp(router: express.Router): express.Application {
 
   app.use(notFoundErrorHandler);
 
-  // app.use(expressErrorHandler);
+  app.use(errorHandler);
 
   return app;
 }
