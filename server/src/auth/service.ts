@@ -2,7 +2,9 @@ import {
   getAccessToken,
   getAuthorizationUrl as getAuthUrl,
   getUserProfile,
+  logger,
 } from '../infrastructure';
+import { createUser } from '../user';
 
 // let's start with the empty scope
 const scopes: string[] = [];
@@ -12,13 +14,22 @@ export function getAuthorizationUrl(): string {
 }
 
 export async function signInOrSignUp(code: string): Promise<string> {
-  const { token } = await getAccessToken(code);
+  const { token, scope } = await getAccessToken(code);
   const profile = await getUserProfile(token);
 
-  console.log(profile);
+  const acceptedScopes = scope.split(',');
+  const user = await createUser({
+    name: profile.name,
+    email: profile.email,
+    avatarUrl: profile.avatarUrl,
+    accessToken: token,
+    scopes: acceptedScopes,
+  });
 
-  // todo:
-  // create/update user in db
-  // return the created user id
-  return 'xxx';
+  logger.info(
+    { id: user._id, scopes: acceptedScopes },
+    'user successfully created/updated with the following scopes'
+  );
+
+  return user._id.toHexString();
 }
