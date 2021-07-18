@@ -2,6 +2,7 @@
   "name": "ama-api",
   "version": "0.0.1",
   "main": "build",
+  "private": true,
   "scripts": {
     "start": "tsnd --transpile-only -r dotenv/config ./src",
     "type": "tsc --noEmit",
