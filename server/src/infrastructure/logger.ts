@@ -15,4 +15,8 @@ export const logger = pino({
   name: serviceName,
   level: logLevel,
   prettyPrint: isDevelopment ? prettyPrintOptions : false,
+  serializers: {
+    req: pino.stdSerializers.req,
+    res: pino.stdSerializers.res,
+  },
 });
