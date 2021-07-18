@@ -2,11 +2,13 @@ import { MongoClient } from 'mongodb';
 
 import { papr } from './papr';
 import { logger } from '../logger';
+import { terminate } from '../terminate';
 
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING as string;
 
 export const dbClient: MongoClient = new MongoClient(DB_CONNECTION_STRING, {
   useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
 });
 
 export async function connectToMongo(): Promise<void> {
@@ -25,8 +27,8 @@ export async function connectToMongo(): Promise<void> {
     papr.initialize(dbClient.db());
     await papr.updateSchemas();
   } catch (error) {
-    logger.fatal(error, 'Failed to connect to the db');
-    // todo: terminate the application
+    logger.fatal({ err: error }, 'Failed to connect to the db');
+    terminate({ gracefully: false });
   }
 }
 

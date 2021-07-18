@@ -1,3 +1,4 @@
+import './infrastructure/globalErrorHandler';
 import { connectToMongo, createServer, logger } from './infrastructure';
 import { router } from './bootstrap';
 
