@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import { logger } from '../logger';
+import { checkAuth } from './middlewares/checkAuth';
 import { notFoundErrorHandler, errorHandler } from './middlewares/errorHandler';
 
 const corsOption = {
@@ -11,12 +12,14 @@ const corsOption = {
   credentials: true,
 };
 
+const publicRoutes = ['/signup', '/auth-callback'];
+
 export function createExpressApp(router: express.Router): express.Application {
   const app: express.Application = express();
 
   // app.use(helmet());
 
-  // todo: use a proper request logger
+  // todo: is it necessary? what about tracing tools ie dd-trace
   app.use((req, res, next) => {
     logger.info(req.originalUrl);
     next();
@@ -26,8 +29,14 @@ export function createExpressApp(router: express.Router): express.Application {
 
   app.use(cookieParser());
 
-  // parses incoming request's json body
   app.use(express.json());
+
+  app.all(publicRoutes, (req, res, next) => {
+    res.locals.skipAuthCheck = true;
+    next();
+  });
+
+  app.use(checkAuth);
 
   app.use(router);
 

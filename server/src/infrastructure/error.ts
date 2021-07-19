@@ -19,3 +19,9 @@ export class NotFoundError extends HttpError {
     super(message, ResponseCodes.notFound, context);
   }
 }
+
+export class BadRequestError extends HttpError {
+  constructor(message: string, context?: KeyValue) {
+    super(message, ResponseCodes.badRequest, context);
+  }
+}
