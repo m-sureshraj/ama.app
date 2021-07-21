@@ -5,10 +5,11 @@ import { asyncHandler, logger } from '../infrastructure';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const APP_DOMAIN = process.env.APP_DOMAIN as string;
+const redirectAfterSignup = `${APP_DOMAIN}/app`;
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
-  maxAge: 1000 * 60 * 2, // expires in 2 minutes
+  maxAge: 1000 * 60 * 60 * 10, // expires in 10 days
   domain: isDevelopment ? 'localhost' : APP_DOMAIN,
   secure: !isDevelopment,
   sameSite: 'lax',
@@ -38,7 +39,7 @@ router.get(
 
     // didn't sign it because the cookie transmitted over a secure connection in prod.
     res.cookie('id', userId, cookieOptions);
-    res.redirect(APP_DOMAIN);
+    res.redirect(redirectAfterSignup);
   })
 );
 

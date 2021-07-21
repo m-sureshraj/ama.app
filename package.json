@@ -1,0 +1,23 @@
+{
+  "name": "ama",
+  "version": "0.0.1",
+  "repository": "git@github.com:m-sureshraj/ama.app.git",
+  "author": "m-sureshraj <m.s.suresh100@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": "14.15.0",
+    "yarn": "1.22.5"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "server/**/*.{ts,js}": "yarn --cwd ./server lint --fix ."
+  },
+  "devDependencies": {
+    "husky": "^7.0.1",
+    "lint-staged": "^11.0.1"
+  }
+}

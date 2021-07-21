@@ -1,8 +1,2 @@
 .idea
-
 node_modules
-
-# server
-server/build
-server/.env
-server/todo.txt

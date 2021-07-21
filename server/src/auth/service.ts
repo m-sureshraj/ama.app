@@ -27,9 +27,9 @@ export async function signInOrSignUp(code: string): Promise<string> {
   });
 
   logger.info(
-    { id: user._id, scopes: acceptedScopes },
+    { id: user.id, scopes: acceptedScopes },
     'user successfully created/updated with the following scopes'
   );
 
-  return user._id.toHexString();
+  return user.id;
 }
