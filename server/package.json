@@ -7,11 +7,8 @@
     "start": "tsnd --transpile-only -r dotenv/config ./src",
     "type": "tsc --noEmit",
     "build": "tsc",
+    "lint": "eslint",
     "lint-all": "eslint '**/*.{ts,js}'"
-  },
-  "engines": {
-    "node": "14.15.0",
-    "yarn": "1.22.5"
   },
   "license": "MIT",
   "dependencies": {
