@@ -10,7 +10,7 @@ export function checkAuth(req: Request, res: Response, next: NextFunction): void
 
   const userId = req.cookies.id;
   if (!userId) {
-    res.status(ResponseCodes.unauthorized).json({ message: 'Not authorize' });
+    res.status(ResponseCodes.unauthorized).json({ message: 'Not authorized' });
     return;
   }
 

@@ -7,7 +7,7 @@ import { mapPublicFields } from './domain';
 const router = Router();
 
 router.get(
-  '/me',
+  '/',
   asyncHandler(async (req: Request, res: Response) => {
     const { userId } = req.body;
     const user = await getUser(userId);

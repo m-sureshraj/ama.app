@@ -12,7 +12,7 @@ const corsOption = {
   credentials: true,
 };
 
-const publicRoutes = ['/signup', '/auth-callback'];
+const publicRoutes = ['/auth/signup', '/auth/callback'];
 
 export function createExpressApp(router: express.Router): express.Application {
   const app: express.Application = express();
@@ -38,7 +38,7 @@ export function createExpressApp(router: express.Router): express.Application {
 
   app.use(checkAuth);
 
-  app.use(router);
+  app.use('/', router);
 
   app.use(notFoundErrorHandler);
 
