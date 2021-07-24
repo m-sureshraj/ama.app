@@ -7,9 +7,10 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const APP_DOMAIN = process.env.APP_DOMAIN as string;
 const redirectAfterSignup = `${APP_DOMAIN}/app`;
 
+const cookieName = 'id';
 const cookieOptions: CookieOptions = {
   httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 10, // expires in 10 days
+  maxAge: 1000 * 60 * 60 * 24 * 10, // expires in 10 days
   domain: isDevelopment ? 'localhost' : APP_DOMAIN,
   secure: !isDevelopment,
   sameSite: 'lax',
@@ -23,8 +24,12 @@ router.get('/signup', (req: Request, res: Response) => {
   res.redirect(redirectUrl);
 });
 
+router.get('/logout', (req: Request, res: Response) => {
+  res.clearCookie(cookieName).send({ message: 'Logged out' });
+});
+
 router.get(
-  '/auth-callback',
+  '/callback',
   asyncHandler(async (req: Request, res: Response) => {
     const { code, error, error_description: errorDescription } = req.query;
 
@@ -38,7 +43,7 @@ router.get(
     logger.info({ userId }, 'authentication flow finished successfully');
 
     // didn't sign it because the cookie transmitted over a secure connection in prod.
-    res.cookie('id', userId, cookieOptions);
+    res.cookie(cookieName, userId, cookieOptions);
     res.redirect(redirectAfterSignup);
   })
 );

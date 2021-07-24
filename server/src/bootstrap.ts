@@ -8,5 +8,5 @@ import { userRouter } from './user';
 
 export const router = Router();
 
-// register router
-router.use('/', [authRouter, userRouter]);
+router.use('/auth', authRouter);
+router.use('/user', userRouter);
