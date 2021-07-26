@@ -1,10 +1,9 @@
 import { useRoute } from "wouter";
 
-const signupUrl = `${process.env.REACT_API_HOST}/signup`;
+const signupUrl = `${process.env.REACT_APP_API_HOST}/auth/signup`;
 
 export default function Landing() {
     const [match] = useRoute("/");
-
     if (!match) return null;
 
     return (

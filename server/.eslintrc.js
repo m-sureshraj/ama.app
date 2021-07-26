@@ -44,7 +44,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': ERROR,
     '@typescript-eslint/explicit-module-boundary-types': ERROR,
   },
-  // enable when integrating Jest
+  // enable after integrating Jest
   // overrides: [
   //   {
   //     files: ['*.spec.ts'],
