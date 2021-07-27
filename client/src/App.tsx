@@ -1,46 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Switch } from 'wouter';
 
 import './App.css';
 import Landing from './pages/Landing';
-import { Private } from './pages/Private';
+import { AMA } from './pages/AMA';
+import { userStore, User } from './store';
+import { PrivateRoute } from './components/PrivateRoute';
+import { PublicRoute } from './components/PublicRoute';
 
-import { PrivateRoute } from './PrivateRoute';
-import { PublicRoute } from './PublicRoute';
-
-const apiHost = process.env.REACT_APP_API_HOST;
-
-async function getUserProfile() {
-    const res = await fetch(`${apiHost}/me`, { credentials: 'include' });
-    return res.json();
-}
+const selector = (state: User) => ({ isLoading: state.isLoading, fetchUser: state.fetchUser });
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(null);
+    const { fetchUser, isLoading } = userStore(selector);
 
     useEffect(() => {
-        getUserProfile()
-            .then(user => {
-                setUser(user);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+        fetchUser();
+    }, [fetchUser]);
 
-    if (loading) return <div>Loading...</div>;
+    if (isLoading) return <div>Loading...</div>;
 
     return (
-        <div className="App">
+        <div>
             <Switch>
                 <PublicRoute path="/" component={Landing} />
-                <PrivateRoute path="/app" component={Private} />
+                <PrivateRoute path="/app" component={AMA} />
             </Switch>
-            <Private />
         </div>
     );
 }
