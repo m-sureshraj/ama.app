@@ -16,6 +16,8 @@ export const logger = pino({
   level: logLevel,
   prettyPrint: isDevelopment ? prettyPrintOptions : false,
   serializers: {
+    // In addition to `err` key, Error can be passed via `error` as well
+    error: pino.stdSerializers.err,
     req: pino.stdSerializers.req,
     res: pino.stdSerializers.res,
   },

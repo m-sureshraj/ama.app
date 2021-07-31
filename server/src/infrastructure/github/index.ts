@@ -1,6 +1,8 @@
 import fetch from 'node-fetch';
 
 import type { AccessToken, UserProfile } from './types';
+import { handleFetchError } from '../util';
+import { AppError } from '../error';
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -22,14 +24,17 @@ export async function getAccessToken(code: string): Promise<AccessToken> {
   ];
   const url = `${githubAuthBase}/access_token?${qs.join('&')}`;
 
-  // fixme: Write a wrapper for `fetch` to handle exception separately
   const res = await fetch(url, {
     method: 'post',
     headers: {
       Accept: 'application/json',
     },
-  });
+  }).then(handleFetchError('An error occurred while fetching the access token'));
+
   const token = await res.json();
+  if (token.error) {
+    throw new AppError(token.error, { description: token.error.error_description });
+  }
 
   return {
     token: token.access_token,
@@ -41,12 +46,12 @@ export async function getAccessToken(code: string): Promise<AccessToken> {
 export async function getUserProfile(accessToken: string): Promise<UserProfile> {
   const url = `${githubApiBase}/user`;
 
-  // fixme: Write a wrapper for `fetch` to handle exception separately
   const res = await fetch(url, {
     headers: {
       Authorization: `token ${accessToken}`,
     },
-  });
+  }).then(handleFetchError('An error occurred while fetching the user profile'));
+
   const profile = await res.json();
 
   return {

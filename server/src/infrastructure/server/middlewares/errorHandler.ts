@@ -19,7 +19,7 @@ export const errorHandler = (
     const statusCode = (error as HttpError).httpStatus || ResponseCodes.error;
     const message = error.message || 'Not provided';
 
-    logger.info({ message, err: error, req }, 'App error was caught by error handler middleware');
+    logger.info({ message, error, req }, 'App error was caught by error handler middleware');
 
     res.status(statusCode).send({
       message,
@@ -28,7 +28,7 @@ export const errorHandler = (
   }
 
   logger.fatal(
-    { message: error.message, err: error, req },
+    { message: error.message, error, req },
     'Unknown Error was caught by error handler middleware'
   );
   terminate({ gracefully: false });
