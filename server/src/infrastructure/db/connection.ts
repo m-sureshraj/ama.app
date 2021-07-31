@@ -27,7 +27,7 @@ export async function connectToMongo(): Promise<void> {
     papr.initialize(dbClient.db());
     await papr.updateSchemas();
   } catch (error) {
-    logger.fatal({ err: error }, 'Failed to connect to the db');
+    logger.fatal({ error }, 'Failed to connect to the db');
     terminate({ gracefully: false });
   }
 }

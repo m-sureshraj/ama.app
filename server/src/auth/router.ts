@@ -34,17 +34,22 @@ router.get(
     const { code, error, error_description: errorDescription } = req.query;
 
     if (error) {
-      logger.info({ error, errorDescription }, 'User denied the application access');
+      logger.info({ error, errorDescription }, 'user denied the application access');
       res.redirect(APP_DOMAIN);
       return;
     }
 
-    const userId = await signInOrSignUp(code as string);
-    logger.info({ userId }, 'authentication flow finished successfully');
+    try {
+      const userId = await signInOrSignUp(code as string);
+      logger.info({ userId }, 'authentication flow finished successfully');
 
-    // didn't sign it because the cookie transmitted over a secure connection in prod.
-    res.cookie(cookieName, userId, cookieOptions);
-    res.redirect(redirectAfterSignup);
+      // didn't sign it because the cookie transmitted over a secure connection in prod.
+      res.cookie(cookieName, userId, cookieOptions);
+      res.redirect(redirectAfterSignup);
+    } catch (error) {
+      logger.error({ error, req }, 'An error occurred while processing the auth callback');
+      res.redirect(`${APP_DOMAIN}?error=auth_failed`);
+    }
   })
 );
 
