@@ -7,7 +7,13 @@ charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[*.{ts,js,json,md}]
 indent_style = space
+
+[*.{json,md}]
 indent_size = 2
+
+[server/**.{ts,js}]
+indent_size = 2
+
+[client/**.{ts,tsx,js}]
+indent_size = 4
