@@ -25,7 +25,7 @@ router.get('/signup', (req: Request, res: Response) => {
 });
 
 router.get('/logout', (req: Request, res: Response) => {
-  res.clearCookie(cookieName).send({ message: 'Logged out' });
+  res.clearCookie(cookieName, cookieOptions).send({ message: 'Logged out' });
 });
 
 router.get(

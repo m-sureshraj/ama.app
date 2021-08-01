@@ -1,0 +1,9 @@
+.avatar {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar img {
+    border-radius: 30px;
+    margin-bottom: 20px;
+}

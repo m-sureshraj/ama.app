@@ -1,34 +1,47 @@
-import { useRoute } from 'wouter';
+import type { FC } from 'react';
+import { Redirect, RouteComponentProps, Router } from '@reach/router';
 
 import { userStore, User, Profile } from '../store';
+import { Sidebar, Avatar } from '../components';
+import { WatchList } from './WatchList';
+import { Search } from './Search';
+import { PopularRepos } from './PopularRepos';
+import { Settings } from './Settings';
 
 interface Selector {
     logout: User['logout'];
     profile: Profile;
+    isLoggedIn: User['isLoggedIn'];
 }
+
+interface Props extends RouteComponentProps {}
 
 const userSelector = (state: User) =>
     ({
         logout: state.logout,
         profile: state.profile,
+        isLoggedIn: state.isLoggedIn,
     } as Selector);
 
-export function AMA() {
-    const [match] = useRoute('/app');
-    if (!match) return null;
+export const AMA: FC<Props> = () => {
+    const { profile, logout, isLoggedIn } = userStore(userSelector);
 
-    const { profile, logout } = userStore(userSelector);
+    if (!isLoggedIn) return <Redirect to="/" noThrow />;
 
-    const handleCallback = async () => {
+    const handleLogout = async () => {
         await logout();
     };
 
     return (
         <div>
-            <h2>{profile.name}</h2>
-            <p>{profile.email}</p>
-            <br />
-            <button onClick={handleCallback}>Logout</button>
+            <Sidebar header={<Avatar name={profile.name} url={profile.avatarUrl} />} />
+            <button onClick={handleLogout}>logout</button>
+            <Router>
+                <WatchList path="/" />
+                <Search path="search" />
+                <Settings path="settings" />
+                <PopularRepos path="popular-ama-repos" />
+            </Router>
         </div>
     );
-}
+};
