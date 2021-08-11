@@ -1,9 +1,11 @@
 import fetch from 'node-fetch';
 import { graphql } from '@octokit/graphql';
+import type { User } from '@octokit/graphql-schema';
 
 import type { AccessToken, RepositoryWithOwner, UserProfile } from './types';
 import { handleFetchError } from '../util';
-import { AppError, BadRequestError } from '../error';
+import { AppError, GraphqlError } from '../error';
+import { queryUserWithRepository } from './queries';
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -66,23 +68,10 @@ export async function getRepositoryWithOwner(
   accessToken: string,
   repoOwner: string
 ): Promise<RepositoryWithOwner> {
-  const query = `query($repoOwner: String!) {
-    user(login: $repoOwner) {
-      id,
-      name,
-      avatarUrl,
-      bio,
-      repository(name: "ama") {
-        id,
-        name
-      }
-    }
-  }`;
-
   try {
     const {
       user: { repository, ...rest },
-    } = await graphql(query, {
+    } = await graphql<{ user: User }>(queryUserWithRepository, {
       repoOwner,
       headers: {
         authorization: `token ${accessToken}`,
@@ -90,21 +79,12 @@ export async function getRepositoryWithOwner(
     });
 
     return {
-      repository,
-      owner: rest as RepositoryWithOwner['owner'],
+      repository: repository || null,
+      owner: rest,
     };
   } catch (error) {
     if (error.name === 'GraphqlError') {
-      throw new BadRequestError(error.message, {
-        errors: error.errors,
-        request: {
-          ...error.request,
-          headers: {
-            ...error.request.headers,
-            authorization: 'NOT AVAILABLE IN LOGS',
-          },
-        },
-      });
+      throw new GraphqlError(error);
     }
 
     throw error;
