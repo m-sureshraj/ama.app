@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     es2020: true,
   },
-  plugins: ['@typescript-eslint', 'import'], // jest
+  plugins: ['@typescript-eslint', 'import', 'graphql'], // jest
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -31,6 +31,32 @@ module.exports = {
       {
         groups: ['builtin', 'external', 'internal', 'unknown'],
         'newlines-between': 'always',
+      },
+    ],
+
+    // graphql query rules
+    'graphql/template-strings': [
+      ERROR,
+      {
+        env: 'literal',
+        tagName: 'gql',
+        schemaJson: require('./node_modules/@octokit/graphql-schema/schema.json'),
+      },
+    ],
+    'graphql/no-deprecated-fields': [
+      ERROR,
+      {
+        env: 'literal',
+        tagName: 'gql',
+        schemaJson: require('./node_modules/@octokit/graphql-schema/schema.json'),
+      },
+    ],
+    'graphql/named-operations': [
+      ERROR,
+      {
+        env: 'literal',
+        tagName: 'gql',
+        schemaJson: require('./node_modules/@octokit/graphql-schema/schema.json'),
       },
     ],
 

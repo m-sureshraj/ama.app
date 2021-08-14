@@ -1,3 +1,5 @@
+import type { User, Repository } from '@octokit/graphql-schema';
+
 export interface AccessToken {
   token: string;
   type: string;
@@ -11,14 +13,6 @@ export interface UserProfile {
 }
 
 export interface RepositoryWithOwner {
-  repository: {
-    id: string;
-    name: string;
-  } | null;
-  owner: {
-    id: string;
-    name: string;
-    avatarUrl: string;
-    bio: string;
-  };
+  repository: Pick<Repository, 'id' | 'name'> | null;
+  owner: Pick<User, 'id' | 'name' | 'avatarUrl' | 'bio'>;
 }
