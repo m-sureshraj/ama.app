@@ -2,21 +2,21 @@ import fetch from 'node-fetch';
 import { graphql } from '@octokit/graphql';
 import type { User } from '@octokit/graphql-schema';
 
-import type { AccessToken, RepositoryWithOwner, UserProfile } from './types';
+import type { AccessToken, RepositoryWithOwner, AuthorizedUser } from './types';
 import { handleFetchError } from '../util';
 import { AppError, GraphqlError } from '../error';
-import { queryUserWithRepository } from './queries';
+import { getAuthorizedUserQuery, getUserWithRepositoryQuery } from './queries';
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 const githubAuthBase = 'https://github.com/login/oauth';
-const githubApiBase = 'https://api.github.com';
+const scopes: string[] = ['read:user'];
 
-export function getAuthorizationUrl(scopes: string[]): string {
+export function getAuthorizationUrl(): string {
   const url = `${githubAuthBase}/authorize`;
 
-  return `${url}?client_id=${GITHUB_CLIENT_ID}&scope${scopes.join(',')}`;
+  return `${url}?client_id=${GITHUB_CLIENT_ID}&scope=${scopes.join(',')}`;
 }
 
 export async function getAccessToken(code: string): Promise<AccessToken> {
@@ -46,22 +46,22 @@ export async function getAccessToken(code: string): Promise<AccessToken> {
   };
 }
 
-export async function getUserProfile(accessToken: string): Promise<UserProfile> {
-  const url = `${githubApiBase}/user`;
+export async function getAuthorizedUser(accessToken: string): Promise<AuthorizedUser> {
+  try {
+    const { viewer } = await graphql<{ viewer: AuthorizedUser }>(getAuthorizedUserQuery, {
+      headers: {
+        authorization: `token ${accessToken}`,
+      },
+    });
 
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `token ${accessToken}`,
-    },
-  }).then(handleFetchError('An error occurred while fetching the user profile'));
+    return viewer;
+  } catch (error) {
+    if (error.name === 'GraphqlError') {
+      throw new GraphqlError(error);
+    }
 
-  const profile = await res.json();
-
-  return {
-    name: profile.name,
-    email: profile.email,
-    avatarUrl: profile.avatar_url,
-  };
+    throw error;
+  }
 }
 
 export async function getRepositoryWithOwner(
@@ -71,7 +71,7 @@ export async function getRepositoryWithOwner(
   try {
     const {
       user: { repository, ...rest },
-    } = await graphql<{ user: User }>(queryUserWithRepository, {
+    } = await graphql<{ user: User }>(getUserWithRepositoryQuery, {
       repoOwner,
       headers: {
         authorization: `token ${accessToken}`,
