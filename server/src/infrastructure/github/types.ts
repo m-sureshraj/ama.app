@@ -6,11 +6,7 @@ export interface AccessToken {
   scope: string;
 }
 
-export interface UserProfile {
-  name: string;
-  email: string;
-  avatarUrl: string;
-}
+export type AuthorizedUser = Pick<User, 'login' | 'email' | 'avatarUrl'>;
 
 export interface RepositoryWithOwner {
   repository: Pick<Repository, 'id' | 'name'> | null;

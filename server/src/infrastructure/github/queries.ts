@@ -3,8 +3,8 @@
 // /* GraphQL */ comment tags are supported.
 import gql from 'fake-tag';
 
-export const queryUserWithRepository = gql`
-  query UserWithRepository($repoOwner: String!) {
+export const getUserWithRepositoryQuery = gql`
+  query GetUserWithRepository($repoOwner: String!) {
     user(login: $repoOwner) {
       id
       name
@@ -14,6 +14,16 @@ export const queryUserWithRepository = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const getAuthorizedUserQuery = gql`
+  query GetAuthorizedUser {
+    viewer {
+      login
+      email
+      avatarUrl
     }
   }
 `;
