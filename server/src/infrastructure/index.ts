@@ -6,3 +6,4 @@ export * from './logger';
 export * from './terminate';
 export * from './error';
 export * from './consts';
+export * from './util';

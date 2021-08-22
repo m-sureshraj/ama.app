@@ -5,11 +5,15 @@ import { mapUserDocument, User } from './domain';
 
 const schemaOptions = {
   timestamps: true,
+  defaults: {
+    isAdmin: false,
+  },
 };
 
 const userSchema = schema(
   {
     name: types.string({ required: true }),
+    isAdmin: types.boolean(),
     email: types.string({ required: true }),
     accessToken: types.string({ required: true }),
     avatarUrl: types.string({ required: true }),

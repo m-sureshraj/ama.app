@@ -66,13 +66,15 @@ export async function getAuthorizedUser(accessToken: string): Promise<Authorized
 
 export async function getRepositoryWithOwner(
   accessToken: string,
-  repoOwner: string
+  ownerLogin: string,
+  repoName: string
 ): Promise<RepositoryWithOwner> {
   try {
     const {
       user: { repository, ...rest },
     } = await graphql<{ user: User }>(getUserWithRepositoryQuery, {
-      repoOwner,
+      repoOwner: ownerLogin,
+      repoName,
       headers: {
         authorization: `token ${accessToken}`,
       },

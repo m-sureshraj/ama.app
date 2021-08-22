@@ -4,13 +4,14 @@
 import gql from 'fake-tag';
 
 export const getUserWithRepositoryQuery = gql`
-  query GetUserWithRepository($repoOwner: String!) {
+  query GetUserWithRepository($repoOwner: String!, $repoName: String!) {
     user(login: $repoOwner) {
       id
       name
       avatarUrl
       bio
-      repository(name: "ama") {
+      login
+      repository(name: $repoName) {
         id
         name
       }

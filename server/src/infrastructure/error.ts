@@ -26,6 +26,18 @@ export class BadRequestError extends HttpError {
   }
 }
 
+export class ForbiddenError extends HttpError {
+  constructor(message: string, context?: KeyValue) {
+    super(message, ResponseCodes.forbidden, context);
+  }
+}
+
+export class DuplicateEntityError extends HttpError {
+  constructor(message: string, context?: KeyValue) {
+    super(message, ResponseCodes.duplicate, context);
+  }
+}
+
 interface GraphqlErrorResponse extends Error {
   errors: Record<string, unknown>[];
   request: {
