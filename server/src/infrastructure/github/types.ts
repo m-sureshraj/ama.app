@@ -10,5 +10,5 @@ export type AuthorizedUser = Pick<User, 'login' | 'email' | 'avatarUrl'>;
 
 export interface RepositoryWithOwner {
   repository: Pick<Repository, 'id' | 'name'> | null;
-  owner: Pick<User, 'id' | 'name' | 'avatarUrl' | 'bio'>;
+  owner: Pick<User, 'id' | 'name' | 'login' | 'avatarUrl' | 'bio'>;
 }

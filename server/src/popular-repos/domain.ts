@@ -1,5 +1,8 @@
 import { RepoDocument } from './repository';
 
+// Only the following names will be considered valid repo names
+export const supportedRepositoryNames = ['ama', 'AMA', 'amas', 'feedback'];
+
 export interface Repository extends Omit<RepoDocument, '_id'> {
   id: string;
 }

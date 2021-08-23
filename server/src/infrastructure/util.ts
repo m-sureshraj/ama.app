@@ -1,4 +1,5 @@
 import { Response } from 'node-fetch';
+import { ObjectID } from 'mongodb';
 
 import { HttpError } from './error';
 
@@ -13,4 +14,8 @@ export function handleFetchError(message: string) {
 
     return res;
   };
+}
+
+export function convertToObjectId(id: string): ObjectID {
+  return new ObjectID(id);
 }

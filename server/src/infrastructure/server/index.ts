@@ -7,6 +7,7 @@ import { logger } from '../logger';
 import { terminate } from '../terminate';
 
 export * from './middlewares/asyncHandler';
+export * from './middlewares/expressValidator';
 
 let server: Server;
 
