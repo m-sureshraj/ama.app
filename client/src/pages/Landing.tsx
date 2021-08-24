@@ -1,13 +1,12 @@
 import type { FC } from 'react';
 import { Redirect, RouteComponentProps } from '@reach/router';
 
-import { userStore } from '../store';
+import { userStore } from '../user';
+import { apiHost } from '../utils/constants';
 
-interface Props extends RouteComponentProps {}
+const signupUrl = `${apiHost}/auth/signup`;
 
-const signupUrl = `${process.env.REACT_APP_API_HOST}/auth/signup`;
-
-export const Landing: FC<Props> = () => {
+export const Landing: FC<RouteComponentProps> = () => {
     const { isLoggedIn } = userStore(state => ({ isLoggedIn: state.isLoggedIn }));
 
     if (isLoggedIn) return <Redirect to="/app" noThrow />;

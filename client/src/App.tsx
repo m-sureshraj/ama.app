@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, ReactElement } from 'react';
 import { Router } from '@reach/router';
 
 import './App.css';
 import { Landing } from './pages/Landing';
 import { AMA } from './pages/AMA';
-import { userStore, User } from './store';
+import { userStore, User } from './user';
 
 const selector = (state: User) => ({ isLoading: state.isLoading, fetchUser: state.fetchUser });
 
-function App() {
+function App(): ReactElement {
     const { fetchUser, isLoading } = userStore(selector);
 
     useEffect(() => {
@@ -17,6 +17,7 @@ function App() {
 
     if (isLoading) return <div>Loading...</div>;
 
+    // https://reach.tech/router/nesting
     return (
         <Router>
             <Landing path="/" />
