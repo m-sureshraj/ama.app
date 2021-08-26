@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 import { Redirect, RouteComponentProps, Router } from '@reach/router';
 
-import { userStore, User, Profile } from '../store';
+import { userStore, User, Profile } from '../user';
 import { Sidebar, Avatar } from '../components';
 import { WatchList } from './WatchList';
 import { Search } from './Search';
-import { PopularRepos } from './PopularRepos';
+import { PopularRepos } from '../popular-repos';
 import { Settings } from './Settings';
 
 interface Selector {
@@ -14,8 +14,6 @@ interface Selector {
     isLoggedIn: User['isLoggedIn'];
 }
 
-interface Props extends RouteComponentProps {}
-
 const userSelector = (state: User) =>
     ({
         logout: state.logout,
@@ -23,7 +21,7 @@ const userSelector = (state: User) =>
         isLoggedIn: state.isLoggedIn,
     } as Selector);
 
-export const AMA: FC<Props> = () => {
+export const AMA: FC<RouteComponentProps> = () => {
     const { profile, logout, isLoggedIn } = userStore(userSelector);
 
     if (!isLoggedIn) return <Redirect to="/" noThrow />;
@@ -32,6 +30,7 @@ export const AMA: FC<Props> = () => {
         await logout();
     };
 
+    // fixme: The avatar components re-renders for each route change
     return (
         <div>
             <Sidebar header={<Avatar name={profile.name} url={profile.avatarUrl} />} />

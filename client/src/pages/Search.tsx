@@ -1,8 +1,6 @@
 import type { FC } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-interface Props extends RouteComponentProps {}
-
-export const Search: FC<Props> = () => {
+export const Search: FC<RouteComponentProps> = () => {
     return <div>Search</div>;
 };
