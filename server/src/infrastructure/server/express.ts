@@ -13,6 +13,7 @@ const corsOption = {
 };
 
 const publicRoutes = ['/auth/signup', '/auth/callback'];
+const COOKIE_SECRET = process.env.COOKIE_SECRET;
 
 export function createExpressApp(router: express.Router): express.Application {
   const app: express.Application = express();
@@ -27,7 +28,7 @@ export function createExpressApp(router: express.Router): express.Application {
 
   app.use(cors(corsOption));
 
-  app.use(cookieParser());
+  app.use(cookieParser(COOKIE_SECRET));
 
   app.use(express.json());
 

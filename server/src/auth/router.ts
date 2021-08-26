@@ -14,6 +14,7 @@ const cookieOptions: CookieOptions = {
   domain: isDevelopment ? 'localhost' : APP_DOMAIN,
   secure: !isDevelopment,
   sameSite: 'lax',
+  signed: true, // res.cookie() will use the secret passed to cookieParser(secret) to sign the value.
 };
 
 const router = Router();
@@ -43,7 +44,6 @@ router.get(
       const userId = await signInOrSignUp(code as string);
       logger.info({ userId }, 'authentication flow finished successfully');
 
-      // didn't sign it because the cookie transmitted over a secure connection in prod.
       res.cookie(cookieName, userId, cookieOptions);
       res.redirect(redirectAfterSignup);
     } catch (error) {
