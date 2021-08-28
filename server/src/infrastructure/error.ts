@@ -49,10 +49,6 @@ interface GraphqlErrorResponse extends Error {
 
 export class GraphqlError extends BadRequestError {
   constructor(error: GraphqlErrorResponse) {
-    if (error.request.headers?.authorization) {
-      error.request.headers.authorization = 'NOT AVAILABLE IN LOGS';
-    }
-
     super(error.message, {
       errors: error.errors,
       request: error.request,
