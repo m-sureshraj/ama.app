@@ -7,7 +7,7 @@ interface Props {
 
 export function Sidebar({ header }: Props): ReactElement {
     return (
-        <aside>
+        <>
             <>{header}</>
             <ul>
                 <li>
@@ -23,6 +23,6 @@ export function Sidebar({ header }: Props): ReactElement {
                     <Link to="settings">Settings</Link>
                 </li>
             </ul>
-        </aside>
+        </>
     );
 }
