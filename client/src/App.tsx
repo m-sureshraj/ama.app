@@ -1,7 +1,6 @@
 import { useEffect, ReactElement } from 'react';
 import { Router } from '@reach/router';
 
-import './App.css';
 import { Landing } from './pages/Landing';
 import { AMA } from './pages/AMA';
 import { userStore, User } from './user';

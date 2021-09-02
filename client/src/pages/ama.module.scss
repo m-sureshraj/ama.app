@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.sideBar {
+    min-width: 300px;
+    border-right: 1px solid #ccc;
+}
+
+.main {
+    flex: 1 auto;
+    overflow-y: auto;
+}

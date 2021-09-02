@@ -7,6 +7,7 @@ import { WatchList } from './WatchList';
 import { Search } from './Search';
 import { PopularRepos } from '../popular-repos';
 import { Settings } from './Settings';
+import style from './ama.module.scss';
 
 interface Selector {
     logout: User['logout'];
@@ -32,15 +33,19 @@ export const AMA: FC<RouteComponentProps> = () => {
 
     // fixme: The avatar components re-renders for each route change
     return (
-        <div>
-            <Sidebar header={<Avatar name={profile.name} url={profile.avatarUrl} />} />
-            <button onClick={handleLogout}>logout</button>
-            <Router>
-                <WatchList path="/" />
-                <Search path="search" />
-                <Settings path="settings" />
-                <PopularRepos path="popular-ama-repos" />
-            </Router>
+        <div className={style.wrapper}>
+            <aside className={style.sideBar}>
+                <Sidebar header={<Avatar name={profile.name} url={profile.avatarUrl} />} />
+            </aside>
+            <main className={style.main}>
+                <button onClick={handleLogout}>logout</button>
+                <Router>
+                    <WatchList path="/" />
+                    <Search path="search" />
+                    <Settings path="settings" />
+                    <PopularRepos path="popular-ama-repos" />
+                </Router>
+            </main>
         </div>
     );
 };
