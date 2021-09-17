@@ -35,10 +35,13 @@ export const AMA: FC<RouteComponentProps> = () => {
     return (
         <div className={style.wrapper}>
             <aside className={style.sideBar}>
-                <Sidebar header={<Avatar name={profile.name} url={profile.avatarUrl} />} />
+                <Sidebar
+                    header={<Avatar name={profile.name} url={profile.avatarUrl} />}
+                    onLogout={handleLogout}
+                />
             </aside>
+
             <main className={style.main}>
-                <button onClick={handleLogout}>logout</button>
                 <Router>
                     <WatchList path="/" />
                     <Search path="search" />

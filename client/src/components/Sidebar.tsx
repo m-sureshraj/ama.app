@@ -3,12 +3,14 @@ import { Link } from '@reach/router';
 
 interface Props {
     header: ReactChild;
+    onLogout: () => void;
 }
 
-export function Sidebar({ header }: Props): ReactElement {
+export function Sidebar({ header, onLogout }: Props): ReactElement {
     return (
         <>
-            <>{header}</>
+            {header}
+            <button onClick={onLogout}>logout</button>
             <ul>
                 <li>
                     <Link to="./">Watch List</Link>

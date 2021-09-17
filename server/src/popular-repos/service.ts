@@ -10,8 +10,11 @@ import {
 } from '../infrastructure';
 import { getUser } from '../user';
 
-export async function getRepos(): Promise<Repository[]> {
-  return findAllRepos();
+export async function getRepos(
+  skip = 0,
+  limit = 10
+): Promise<{ repos: Repository[]; total: number }> {
+  return findAllRepos(skip, limit);
 }
 
 export async function addRepo(userId: string, repoName: string, ownerLogin: string): Promise<void> {

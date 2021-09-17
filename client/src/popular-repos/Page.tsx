@@ -4,6 +4,7 @@ import { RouteComponentProps } from '@reach/router';
 
 import { popularReposStore, RepoStore } from './store';
 import { Avatar } from '../components';
+import styles from './styles.module.scss';
 
 const selector = (store: RepoStore) => ({
     repos: store.repos,
@@ -26,9 +27,9 @@ export const PopularRepos: FC<RouteComponentProps> = () => {
     }
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             {repos.map(repo => (
-                <div key={repo.id}>
+                <div className={styles.repo} key={repo.id}>
                     <h3>{repo.owner.name}</h3>
                     <Avatar url={repo.owner.avatarUrl} name={repo.owner.name || repo.owner.login} />
                     <p>{repo.owner.bio}</p>
