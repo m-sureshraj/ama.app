@@ -16,8 +16,8 @@ export const popularReposStore = create<RepoStore>(set => ({
     error: null,
     fetchRepos: async () => {
         try {
-            const response = await getPopularRepos();
-            set({ isLoading: false, repos: response });
+            const { repos } = await getPopularRepos();
+            set({ isLoading: false, repos });
         } catch (error) {
             console.error(error);
             set({ error: error.message });

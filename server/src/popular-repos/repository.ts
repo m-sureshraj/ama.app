@@ -37,11 +37,27 @@ const Repo = papr.model('popular-repo', repoSchema);
 export type RepoDocument = typeof repoSchema[0];
 export type RepoDocumentInput = Omit<RepoDocument, '_id' | 'createdAt' | 'updatedAt'>;
 
-// todo: add paging support
-export async function findAllRepos(): Promise<Repository[]> {
-  const repos = await Repo.find({});
+// note: skip-limit isn't the best approach to implement paging.
+// the query becomes slow as the offset increases. But for our app this approach is fine.
+// https://medium.com/swlh/mongodb-pagination-fast-consistent-ece2a97070f3
+export async function findAllRepos(
+  skip: number,
+  limit: number
+): Promise<{ repos: Repository[]; total: number }> {
+  const fetchRepos = Repo.find(
+    {},
+    {
+      limit,
+      skip,
+    }
+  );
+  const fetchTotalDocsCount = Repo.countDocuments({});
+  const [repos, total] = await Promise.all([fetchRepos, fetchTotalDocsCount]);
 
-  return repos.map(mapRepositoryDocument);
+  return {
+    repos: repos.map(mapRepositoryDocument),
+    total,
+  };
 }
 
 export async function saveRepo(input: RepoDocumentInput): Promise<void> {

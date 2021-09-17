@@ -5,10 +5,12 @@
 
 .sideBar {
     min-width: 300px;
+    background-color: #fff;
     border-right: 1px solid #ccc;
 }
 
 .main {
     flex: 1 auto;
     overflow-y: auto;
+    padding: 40px 60px 0;
 }
